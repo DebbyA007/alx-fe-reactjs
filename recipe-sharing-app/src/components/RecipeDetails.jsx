@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useRecipeStore } from './recipeStore';
 import EditRecipeForm from './EditRecipeForm';
 import DeleteRecipeButton from './DeleteRecipeButton';
+import FavoriteButton from './FavoriteButton';
 import { useState } from 'react';
 
 const RecipeDetails = () => {
@@ -36,7 +37,7 @@ const RecipeDetails = () => {
           cursor: 'pointer'
         }}
       >
-        Back to Home
+        ← Back to Home
       </button>
       
       {isEditing ? (
@@ -46,10 +47,16 @@ const RecipeDetails = () => {
         />
       ) : (
         <div>
-          <h1>{recipe.title}</h1>
-          <p style={{ fontSize: '18px', lineHeight: '1.6' }}>{recipe.description}</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+            <h1 style={{ margin: 0, flex: 1 }}>{recipe.title}</h1>
+            <FavoriteButton recipeId={recipe.id} />
+          </div>
           
-          <div style={{ marginTop: '30px', display: 'flex', gap: '10px' }}>
+          <p style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '30px' }}>
+            {recipe.description}
+          </p>
+          
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             <button 
               onClick={() => setIsEditing(true)}
               style={{ 

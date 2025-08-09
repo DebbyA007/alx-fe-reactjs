@@ -1,6 +1,7 @@
 import { useRecipeStore } from './recipeStore';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import FavoriteButton from './FavoriteButton';
 
 const RecipeList = () => {
   const recipes = useRecipeStore(state => state.recipes);
@@ -36,22 +37,27 @@ const RecipeList = () => {
             borderRadius: '8px',
             backgroundColor: '#f8f9fa'
           }}>
-            <h3 style={{ margin: '0 0 10px 0' }}>
-              <Link 
-                to={`/recipe/${recipe.id}`}
-                style={{ 
-                  textDecoration: 'none', 
-                  color: '#007bff'
-                }}
-              >
-                {recipe.title}
-              </Link>
-            </h3>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+              <h3 style={{ margin: '0', flex: 1 }}>
+                <Link 
+                  to={`/recipe/${recipe.id}`}
+                  style={{ 
+                    textDecoration: 'none', 
+                    color: '#007bff'
+                  }}
+                >
+                  {recipe.title}
+                </Link>
+              </h3>
+              <FavoriteButton recipeId={recipe.id} />
+            </div>
+            
             <p style={{ margin: '0 0 10px 0', color: '#6c757d' }}>
               {recipe.description.length > 100 
                 ? `${recipe.description.substring(0, 100)}...` 
                 : recipe.description}
             </p>
+            
             <Link 
               to={`/recipe/${recipe.id}`}
               style={{ 
