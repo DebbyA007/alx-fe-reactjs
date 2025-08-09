@@ -2,15 +2,17 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import TailwindTest from './components/TailwindTest'
+import UserProfile from './components/UserProfile'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-400 to-purple-600 flex flex-col items-center justify-center p-4">
-      {/* Main Card */}
-      <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full mx-4 mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-400 to-purple-600 p-4">
+      
+      {/* Header Section */}
+      <div className="bg-white rounded-lg shadow-xl p-8 max-w-md mx-auto mb-8">
         <div className="text-center mb-8">
           <div className="flex justify-center space-x-4 mb-4">
             <a href="https://vitejs.dev" target="_blank" className="transition-transform hover:scale-110">
@@ -45,7 +47,12 @@ function App() {
       </div>
       
       {/* Tailwind Test Component */}
-      <TailwindTest />
+      <div className="mb-8">
+        <TailwindTest />
+      </div>
+      
+      {/* UserProfile Component */}
+      <UserProfile />
     </div>
   )
 }
