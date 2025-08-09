@@ -1,16 +1,34 @@
 import { useRecipeStore } from './recipeStore';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const RecipeList = () => {
   const recipes = useRecipeStore(state => state.recipes);
+  const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
+  const searchTerm = useRecipeStore(state => state.searchTerm);
+  const filterRecipes = useRecipeStore(state => state.filterRecipes);
+
+  // Initialize filtered recipes when recipes change
+  useEffect(() => {
+    filterRecipes();
+  }, [recipes, filterRecipes]);
+
+  // Determine which recipes to display
+  const recipesToDisplay = searchTerm ? filteredRecipes : recipes;
 
   return (
     <div>
       <h2>Recipe List</h2>
-      {recipes.length === 0 ? (
-        <p>No recipes yet. Add some recipes to get started!</p>
+      {searchTerm && (
+        <p style={{ color: '#6c757d', fontStyle: 'italic' }}>
+          {filteredRecipes.length} recipe(s) found for "{searchTerm}"
+        </p>
+      )}
+      
+      {recipesToDisplay.length === 0 ? (
+        <p>{searchTerm ? 'No recipes match your search.' : 'No recipes yet. Add some recipes to get started!'}</p>
       ) : (
-        recipes.map(recipe => (
+        recipesToDisplay.map(recipe => (
           <div key={recipe.id} style={{ 
             border: '1px solid #ccc', 
             margin: '10px 0', 
@@ -23,8 +41,7 @@ const RecipeList = () => {
                 to={`/recipe/${recipe.id}`}
                 style={{ 
                   textDecoration: 'none', 
-                  color: '#007bff',
-                  hover: { textDecoration: 'underline' }
+                  color: '#007bff'
                 }}
               >
                 {recipe.title}
